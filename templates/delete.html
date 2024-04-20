@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<h2>Delete Review</h2>
+<p>Are you sure you want to delete this review titled "<strong>{{ doc.title }}</strong>" written by <strong>{{ doc.name }}</strong>?</p>
+
+<form method="POST" action="{{ url_for('delete_post', mongoid=doc._id) }}">
+  <button type="submit" class="danger">Delete Review</button>
+  <a href="{{ url_for('reviews')}}">Cancel</a>
+</form>
+{% endblock %}

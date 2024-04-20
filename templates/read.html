@@ -1,23 +1,22 @@
 {% extends 'base.html' %}
 
 {% block container %}
-<h2>Read</h2>
-<p>This page shows information pulled from a MongoDB database collection.
-        
-    {% for doc in docs %}
-    <div>
-        <hr class="solid">
-        <p class="post">
-            Posted by {{doc.name}} at {{ doc.created_at.strftime("%H:%M on %d %B %Y") }}
-            <br/>
-            <a href="{{ url_for('edit',mongoid=doc._id)}}">Edit</a> | <a href="{{ url_for('delete',mongoid=doc._id)}}">Delete</a>
-            <br/>
-        </p>
-        <p>
-            {{ doc.message }}
-        </p>
-            
-    </div>
-    {%endfor%}
-</p>
+<h2>Read Reviews</h2>
+<div>
+    {% if reviews %}
+        {% for review in reviews %}
+            <div class="review-entry">
+                <hr class="solid">
+                <h3>{{ review.title }}</h3>
+                <p><strong>Reviewed by:</strong> {{ review.name }}</p>
+                <p><strong>Review:</strong> {{ review.review }}</p>
+                <p><strong>Date:</strong> {{ review.created_at.strftime("%Y-%m-%d %H:%M") }}</p>
+                <a href="{{ url_for('edit', mongoid=review._id) }}">Edit</a> |
+                <a href="{{ url_for('delete', mongoid=review._id) }}" onclick="return confirm('Are you sure?');">Delete</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No reviews found. Be the first to <a href="{{ url_for('create') }}">write a review</a>!</p>
+    {% endif %}
+</div>
 {% endblock %}
